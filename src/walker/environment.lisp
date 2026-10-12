@@ -308,13 +308,14 @@
     If VAR is a member of the list +GLOBAL-SPECIAL-VARS+ T is returned
     immediately without evaluating the test form.
 
-    On dotcl the compiler is asked directly: GLOBAL-SPECIAL-P is what it
-    consults when it compiles a binding of VAR, so the answer is the same
-    as the test form's, including variables declared special earlier in
-    the file being compiled."
+    On dotcl the compiler is asked directly, through the CLtL2
+    VARIABLE-INFORMATION it provides: it answers :SPECIAL from what the
+    compiler consults when it compiles a binding of VAR, so the answer is
+    the same as the test form's, including variables declared special
+    earlier in the file being compiled."
 
    #+dotcl
-   (and (dotcl.cil-compiler::global-special-p var) t)
+   (eq (dotcl-cltl2:variable-information var) :special)
    #-dotcl
    (ignore-errors
      (or (member var +global-special-vars+)
